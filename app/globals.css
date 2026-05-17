@@ -1,26 +1,79 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ----------------------------------------------------------------------------
+   Base editorial quente — nunca preto puro (#2b251f), nunca branco puro
+   (#fdf8ef). A luz é parte da memória; o fundo vivo é o <AdaptiveGlow />.
+---------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background-color: #fdf8ef; /* sem flash branco no carregamento */
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  body {
+    @apply font-sans font-light text-ink;
+    background: transparent; /* deixa o glow adaptativo aparecer */
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  ::selection {
+    background: color-mix(in srgb, var(--atmo-accent, #8a6a52) 22%, transparent);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [role='button']:focus-visible {
+    outline: 1px solid
+      color-mix(in srgb, var(--atmo-accent, #8a6a52) 60%, transparent);
+    outline-offset: 6px;
+  }
+
+  /* fotos como num álbum — sem arrastar, sem selecionar */
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ----------------------------------------------------------------------------
+   Lenis — CSS recomendado para o scroll com peso de filme.
+---------------------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------------------------
+   Acessibilidade — quem prefere silêncio também não quer movimento.
+   (Lenis, GSAP, R3F e canvas também desligam via JS; aqui é a rede.)
+---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.3s !important;
+    scroll-behavior: auto !important;
+  }
 }

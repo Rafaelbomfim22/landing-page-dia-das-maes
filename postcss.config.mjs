@@ -1,6 +1,8 @@
+/** PostCSS para Tailwind CSS v3 (compatível com Turbopack & Webpack). */
 const config = {
   plugins: {
-    "@tailwindcss/postcss": {},
+    tailwindcss: {},
+    autoprefixer: {},
   },
 };
 

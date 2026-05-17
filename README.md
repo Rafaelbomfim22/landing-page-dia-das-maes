@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Para Marleide — Scrapbook Cinematográfico · Dia das Mães
 
-## Getting Started
+Um filme emocional + álbum artesanal em **Next.js (App Router) + TypeScript +
+Tailwind**. Polaroids inclinados com fita adesiva, rabiscos que se desenham,
+flores girando, poeira na luz, grão de filme, blobs 3D — e **a cor de tudo
+nasce das fotos**.
 
-First, run the development server:
+## Rodando
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra <http://localhost:3000>. Já vem com as fotos reais. Outros scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # build de produção (Turbopack)
+npm start        # serve o build
+npm run lint     # ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Requer Node.js 20.9+.
 
-## Learn More
+## As 7 camadas (do fundo ao primeiro plano)
 
-To learn more about Next.js, take a look at the following resources:
+```
+07 · CONTEÚDO            fotos, polaroids, textos
+06 · DECORAÇÕES MANUAIS  Scribble, Flower, fita adesiva
+05 · GRÃO DE FILME       FilmGrain (noise SVG vibrando)
+04 · POEIRA DE LUZ       DustParticles (canvas)
+03 · GLOW ATMOSFÉRICO    AdaptiveGlow (círculos blur)
+02 · FORMAS 3D           AmbientBlobs (Three.js / R3F)
+01 · COR AMBIENTE        extraída da foto em foco
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A paleta (4 cores: `ambient`, `glow`, `warm`, `accent`) é extraída por
+**node-vibrant** (`lib/extractPalette.ts`), guardada num store **zustand**
+(`hooks/useAtmosphere.ts`) e todas as camadas transicionam juntas em ~2,2s.
+A foto hero (`priority`) abre a paleta; as demais trocam ao entrar no centro
+da tela (`IntersectionObserver`, dentro do `Polaroid`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Decisões técnicas (robustez)
 
-## Deploy on Vercel
+- **Framer ↔ GSAP sem conflito**: GSAP só toca em `[data-parallax]`
+  (translateY no scroll). Entradas, hover e tilt são do Framer. Eles nunca
+  disputam o mesmo elemento — foi a causa de bugs anteriores.
+- **R3F** carregado com `next/dynamic` (`ssr:false`) — sem WebGL no
+  servidor, sem mismatch de hidratação, build estática intacta.
+- **Lenis** importado dinamicamente (nunca toca `window` no SSR).
+- **`prefers-reduced-motion`**: Lenis, parallax, blobs 3D, poeira e grão
+  desligam; o conteúdo fica todo visível e a paleta ainda muda.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Estrutura narrativa (capítulos)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`00` Abertura · `01` O início · `02` O cotidiano · `03` O que você me
+ensinou · `04` As pequenas coisas · `05` Gratidão · `06` A carta.
+
+## Onde editar (procure `// EDITAR` / `{/* EDITAR */}`)
+
+| Onde | O quê |
+|---|---|
+| `app/page.tsx` | Toda a narrativa: textos de cada capítulo, legendas |
+| `app/layout.tsx` | Metadata, fontes, ordem das camadas |
+| `components/Hero.tsx`, `Footer.tsx` | Nome, abertura, carta, assinatura |
+| `components/Polaroid.tsx` | `rotate` (−8°..8°), fita, filtro das fotos |
+| `tailwind.config.ts` | Cores quentes, fontes, textura de papel |
+| `/public/photos/*` | As fotos — **definem as cores do site** |
+| `components/DustParticles.tsx` | Densidade (`45`) |
+| `components/FilmGrain.tsx` | Intensidade do grão (`opacity-[0.09]`) |
+
+> Caveat (manuscrito) só em frases curtas (≤ 5 palavras). Mais que isso,
+> Cormorant. As fotos ficam em `/public/photos/` — troque mantendo os nomes.
+
+## As fotos
+
+`scripts/importPhotos.mjs` importa de `../assets` (auto-rotação EXIF +
+otimização `sharp`). `scripts/genPhotos.mjs` (`npm run gen:photos`) gera
+placeholders se a pasta estiver vazia. `hero.jpg` reaparece no fim
+(círculo que se fecha).
+
+## Stack
+
+`next` 16 · `react` 19 · `tailwindcss` 3 · `framer-motion` · `gsap` +
+`ScrollTrigger` · `lenis` · `three` + `@react-three/fiber` · `node-vibrant`
+· `zustand`.

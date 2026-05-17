@@ -1,65 +1,111 @@
-import Image from "next/image";
+import { Hero } from '@/components/Hero';
+import { Chapter } from '@/components/Chapter';
+import { Manifesto } from '@/components/Manifesto';
+import { Gallery } from '@/components/Gallery';
+import { Footer } from '@/components/Footer';
 
-export default function Home() {
+// EDITAR: toda a narrativa — frases curtas, que pousam.
+export default function Page() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      {/* 00 · Abertura (hero.jpg + hero-mini.jpg) */}
+      <Hero />
+
+      {/* 01 · O início */}
+      <Chapter
+        kicker="Capítulo 01 · O início"
+        title={'Antes de eu\nlembrar de tudo,'}
+        emphasis="você já cuidava de mim."
+        script="a primeira voz que me acalmou"
+        body={[
+          'Tem um cheiro de casa que eu não sei explicar — só sei que é o seu.',
+        ]}
+        src="/photos/chapter-01.jpg"
+        alt="Ela e o filho, no começo de tudo"
+        caption="onde tudo começou"
+        rotate={-3}
+        decoration="scribble"
+      />
+
+      {/* 02 · O cotidiano */}
+      <Chapter
+        kicker="Capítulo 02 · O cotidiano"
+        title={'Os dias comuns\neram,'}
+        emphasis="na verdade, os maiores."
+        body={[
+          'Era no caminho, na espera, no “chegou bem?”. No detalhe miúdo.',
+          'Eu só fui entender o tamanho disso depois. Como quase tudo que importa.',
+        ]}
+        src="/photos/chapter-02.jpg"
+        alt="Um dia qualquer, indo a algum lugar juntos"
+        caption="indo a qualquer lugar, com você"
+        rotate={3}
+        reverse
+        decoration="flower"
+      />
+
+      {/* 03 · O que você me ensinou */}
+      <Manifesto
+        kicker="Capítulo 03 · O que você me ensinou"
+        quote={'Tudo\nque sou\ncomeça\nem você.'}
+        attribution="— e sempre vai"
+      />
+
+      {/* 04 · As pequenas coisas (4 fotos) */}
+      <Gallery
+        kicker="Capítulo 04 · As pequenas coisas"
+        phrase={'Você ria\nmesmo quando\nera difícil.'}
+        closing={'Todo dia comum'}
+        closingEmphasis="era um milagre pequeno."
+        photos={[
+          {
+            src: '/photos/gallery-01.jpg',
+            alt: 'Um passeio especial',
+            caption: 'aquele passeio',
+            rotate: -4,
+          },
+          {
+            src: '/photos/gallery-02.jpg',
+            alt: 'Lado a lado',
+            caption: 'lado a lado, sempre',
+            rotate: 3,
+          },
+          {
+            src: '/photos/gallery-03.jpg',
+            alt: 'Festa junina, de chapéu de palha',
+            caption: 'arraiá nosso',
+            rotate: -3,
+          },
+          {
+            src: '/photos/gallery-04.jpg',
+            alt: 'Selfie na viagem, rindo',
+            caption: 'na estrada, rindo à toa',
+            rotate: 4,
+            aspect: '4/3',
+          },
+        ]}
+      />
+
+      {/* 05 · Gratidão */}
+      <Chapter
+        kicker="Capítulo 05 · Gratidão"
+        title={'O que vem agora'}
+        emphasis="também é seu."
+        script="feliz dia das mães, mãe"
+        body={[
+          'Tudo o que eu construir vai ter um pouco do que você plantou.',
+          'Hoje, e em todos os dias que eu ainda não vivi.',
+        ]}
+        src="/photos/chapter-05.jpg"
+        alt="Um abraço apertado, os dois rindo"
+        caption="você e eu, sempre."
+        rotate={-2}
+        reverse
+        decoration="flower"
+      />
+
+      {/* 06 · A carta */}
+      <Footer />
+    </>
   );
 }
