@@ -9,7 +9,8 @@ corações de luz.
 
 🔗 **Repositório:** <https://github.com/Rafaelbomfim22/landing-page-dia-das-maes>
 🌐 **Site no ar:** <https://landing-page-dia-das-maes.vercel.app>
-🎬 **Vídeo demo:** _gravando — link em breve_ <!-- VIDEO_LINK -->
+🎬 **Vídeo demo:** <https://landing-page-dia-das-maes.vercel.app/demo.mp4>
+(também no repo: [`public/demo.mp4`](public/demo.mp4))
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Rafaelbomfim22/landing-page-dia-das-maes)
 
