@@ -8,7 +8,7 @@ cada memória que entra na tela tinge o fundo inteiro, que respira em
 corações de luz.
 
 🔗 **Repositório:** <https://github.com/Rafaelbomfim22/landing-page-dia-das-maes>
-🌐 **Deploy:** _adicione o link da Vercel aqui após publicar_
+🌐 **Site no ar:** <https://landing-page-dia-das-maes.vercel.app>
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Rafaelbomfim22/landing-page-dia-das-maes)
 
